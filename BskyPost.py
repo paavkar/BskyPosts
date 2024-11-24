@@ -1,10 +1,11 @@
 import json
 
 class BskyPost:
-    def __init__(self, uri, text, author_handle, author_display_name, like_count, reply_count,
+    def __init__(self, uri, text, author_avatar, author_handle, author_display_name, like_count, reply_count,
                  quote_count, repost_count, created_at, images = None):
         self.uri = uri
         self.text = text
+        self.author_avatar = author_avatar
         self.author_handle = author_handle
         self.author_display_name = author_display_name
         self.like_count = like_count
@@ -18,6 +19,7 @@ class BskyPost:
         return {
             'uri': self.uri,
             'text': self.text,
+            'authorAvatar': self.author_avatar,
             'authorHandle': self.author_handle,
             'authorDisplayName': self.author_display_name,
             'likeCount': self.like_count,

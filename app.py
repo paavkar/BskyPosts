@@ -28,7 +28,7 @@ def get_posts():
 
     for f in user_feed_response.feed:
         if f.post.embed is None:
-            post = BskyPost(f.post.uri, f.post.record.text, f.post.author.handle, f.post.author.display_name,
+            post = BskyPost(f.post.uri, f.post.record.text, f.post.author.avatar, f.post.author.handle, f.post.author.display_name,
                         f.post.like_count, f.post.reply_count, f.post.quote_count,
                         f.post.repost_count, f.post.record.created_at)
             user_posts.append(post)
@@ -38,7 +38,7 @@ def get_posts():
                 post_images.append(BskyImage(image.alt, image.fullsize,
                                              image.aspect_ratio.width,
                                              image.aspect_ratio.height))
-            post = BskyPost(f.post.uri, f.post.record.text, f.post.author.handle, f.post.author.display_name,
+            post = BskyPost(f.post.uri, f.post.record.text, f.post.author.avatar, f.post.author.handle, f.post.author.display_name,
                             f.post.like_count, f.post.reply_count, f.post.quote_count,
                             f.post.repost_count, f.post.record.created_at, post_images)
             user_posts.append(post)
