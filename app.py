@@ -11,6 +11,8 @@ app = Flask(__name__)
 
 load_dotenv()
 client = Client()
+my_handle = os.getenv("MY_HANDLE")
+client.login(my_handle, os.getenv("APP_PASSWORD"))
 
 @app.route("/")
 def hello():
@@ -19,11 +21,8 @@ def hello():
 @app.route("/get-posts", methods=["GET"])
 def get_posts():
     data = request.json
-    my_handle = os.getenv("MY_HANDLE")
     user_handle = data["userHandle"]
     user_display_name = ""
-
-    client.login(my_handle, os.getenv("APP_PASSWORD"))
 
     user_feed_response = client.get_author_feed(user_handle)
 
