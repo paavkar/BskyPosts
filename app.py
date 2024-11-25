@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 import os
 from BskyPost import BskyPost, PostEncoder
 from BskyImage import BskyImage
+from BskyVideo import BskyVideo
 import json
 
 app = Flask(__name__)
@@ -29,6 +30,7 @@ def get_posts():
     user_posts = []
 
     for f in user_feed_response.feed:
+        post = None
         if f.post.author.handle == user_handle:
             user_display_name = f.post.author.display_name
         if f.post.embed is None:
@@ -38,7 +40,13 @@ def get_posts():
             user_posts.append(post)
         else:
             if f.post.embed.py_type == "app.bsky.embed.video#view":
-                continue
+                post_videos = [BskyVideo(f.post.embed.alt, f.post.embed.playlist,
+                                         f.post.embed.aspect_ratio.width,
+                                         f.post.embed.aspect_ratio.height)]
+                post = BskyPost(f.post.uri, f.post.record.text, user_handle, user_display_name, f.post.author.avatar,
+                                f.post.author.handle, f.post.author.display_name,
+                                f.post.like_count, f.post.reply_count, f.post.quote_count,
+                                f.post.repost_count, f.post.record.created_at, None, post_videos)
             if f.post.embed.py_type == "app.bsky.embed.images#view":
                 post_images = []
                 for image in f.post.embed.images:
@@ -48,7 +56,7 @@ def get_posts():
                 post = BskyPost(f.post.uri, f.post.record.text, user_handle, user_display_name, f.post.author.avatar, f.post.author.handle, f.post.author.display_name,
                             f.post.like_count, f.post.reply_count, f.post.quote_count,
                             f.post.repost_count, f.post.record.created_at, post_images)
-                user_posts.append(post)
+            user_posts.append(post)
 
     return json.dumps(user_posts, cls=PostEncoder)
 

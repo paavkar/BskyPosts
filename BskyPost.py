@@ -2,7 +2,7 @@ import json
 
 class BskyPost:
     def __init__(self, uri, text, user_handle, user_display_name, author_avatar, author_handle, author_display_name, like_count, reply_count,
-                 quote_count, repost_count, created_at, images = None):
+                 quote_count, repost_count, created_at, images = None, videos = None):
         self.uri = uri
         self.text = text
         self.user_handle = user_handle
@@ -16,6 +16,7 @@ class BskyPost:
         self.repost_count = repost_count
         self.created_at = created_at
         self.images = images
+        self.videos = videos
 
     def to_dict(self):
         return {
@@ -31,7 +32,8 @@ class BskyPost:
             'quoteCount': self.quote_count,
             'repostCount': self.repost_count,
             'createdAt': self.created_at,
-            'images': [image.to_dict() for image in self.images] if self.images is not None else None
+            'images': [image.to_dict() for image in self.images] if self.images is not None else None,
+            'videos': [video.to_dict() for video in self.videos] if self.videos is not None else None
         }
 class PostEncoder(json.JSONEncoder):
     def default(self, obj):
