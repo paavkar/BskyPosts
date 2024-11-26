@@ -160,7 +160,6 @@ def get_posts():
                             post_external_link)
         user_posts.append(post)
 
-    print(len(user_posts))
     return json.dumps(user_posts, cls=PostEncoder)
 
 if __name__ == '__main__':
