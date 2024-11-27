@@ -1,8 +1,9 @@
 import json
 
 class BskyPost:
-    def __init__(self, uri, text, user_handle, user_display_name, author_avatar, author_handle, author_display_name, like_count, reply_count,
-                 quote_count, repost_count, created_at, images = None, videos = None, quoted_post = None, external_link = None):
+    def __init__(self, uri, text, user_handle, user_display_name, author_avatar, author_handle, author_display_name,
+                 like_count, reply_count, quote_count, repost_count, created_at, images = None, videos = None,
+                 quoted_post = None, external_link = None, repost_author = None, reply_parent_author = None):
         self.uri = uri
         self.text = text
         self.user_handle = user_handle
@@ -19,6 +20,8 @@ class BskyPost:
         self.videos = videos
         self.quoted_post = quoted_post
         self.external_link = external_link
+        self.repost_author = repost_author
+        self.reply_parent_author = reply_parent_author
 
     def to_dict(self):
         return {
@@ -37,7 +40,9 @@ class BskyPost:
             'images': [image.to_dict() for image in self.images] if self.images is not None else None,
             'videos': [video.to_dict() for video in self.videos] if self.videos is not None else None,
             'quotedPost': self.quoted_post.to_dict() if self.quoted_post is not None else None,
-            'externalLink': self.external_link.to_dict() if self.external_link is not None else None
+            'externalLink': self.external_link.to_dict() if self.external_link is not None else None,
+            'repostAuthor': self.repost_author.to_dict() if self.repost_author is not None else None,
+            'replyParentAuthor': self.reply_parent_author.to_dict() if self.reply_parent_author is not None else None
         }
 class PostEncoder(json.JSONEncoder):
     def default(self, obj):
