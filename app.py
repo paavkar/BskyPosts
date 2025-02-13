@@ -49,7 +49,7 @@ def get_posts():
             user_display_name = f.post.author.display_name
 
         if f.post.record.reply is None or f.reason is not None:
-            if f.reason is not None:
+            if f.reason is not None and f.reason.py_type == "app.bsky.feed.defs#reasonRepost":
                 repost_author = BskyAuthor(f.post.author.handle, f.post.author.display_name, f.post.author.avatar)
             if f.post.record.reply is not None:
                 repost_author = BskyAuthor(f.post.author.handle, f.post.author.display_name, f.post.author.avatar)
